@@ -1,0 +1,11 @@
+# These are your node cluster nodes
+[kafka_servers]
+node1 kafka_broker_id=1 ansible_host=192.168.56.72
+node2 kafka_broker_id=2 ansible_host=192.168.56.73
+node3 kafka_broker_id=3 ansible_host=192.168.56.74
+#
+# These are your zookeeper cluster nodes
+[zk_servers]
+node1 zk_id=1 ansible_host=192.168.56.72
+node2 zk_id=2 ansible_host=192.168.56.73
+node3 zk_id=3 ansible_host=192.168.56.74
