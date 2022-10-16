@@ -1,0 +1,30 @@
+---
+#########################################################################
+# укажите релиз для скачивания, а так же выберите нужное зеркало
+prog_release:	'3.7.1'
+#prog_mirror:	'http://apache-mirror.rbc.ru/pub/apache'
+#prog_mirror:	'http://mirror.linux-ia64.org/apache'
+#prog_mirror:	'https://www-us.apache.org/dist'
+prog_mirror:	'https://downloads.apache.org'
+#########################################################################
+#https://downloads.apache.org/zookeeper/zookeeper-3.7.1/apache-zookeeper-3.7.1-bin.tar.gz
+role_name: 'zookeeper'
+role_service_accaunt: zookeeper
+
+# path to store programm
+programm_path: /opt/zookeeper
+
+client_port: '2181'
+
+# zookeeper data dir
+data_path: '{{ programm_path }}/data'
+
+# download url
+download_path: "/tmp"
+download_url: "{{ prog_mirror }}/{{ role_name }}/{{ role_name }}-{{ prog_release }}/apache-{{ role_name }}-{{ prog_release }}-bin.tar.gz"
+
+# znode ports
+znode_port1: '2888'
+znode_port2: '3888'
+ 
+...

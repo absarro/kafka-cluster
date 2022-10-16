@@ -1,0 +1,22 @@
+---
+#########################################################################
+# укажите релиз и scale для скачивания, а так же выберите нужное зеркало
+prog_release:	'3.3.1'
+prog_scale_num:	'2.13'
+#prog_mirror:	'http://apache-mirror.rbc.ru/pub/apache'
+#prog_mirror:	'http://mirror.linux-ia64.org/apache'
+#prog_mirror:	'https://www-us.apache.org/dist'
+prog_mirror:	'https://downloads.apache.org'
+#########################################################################
+
+role_name: 'kafka'
+role_service_accaunt: kafka
+
+# path to store programm
+programm_path: /opt/kafka
+
+# download url
+download_path: "/tmp"
+download_url: "{{ prog_mirror }}/{{ role_name }}/{{ prog_release }}/{{ role_name }}_{{ prog_scale_num }}-{{ prog_release }}.tgz"
+
+#https://downloads.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz

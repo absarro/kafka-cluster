@@ -1,0 +1,9 @@
+[zookeeper]
+centos-prod ansible_host=192.168.137.13
+
+[kafka]
+ubuntu-prod ansible_host=192.168.137.12
+
+[both]
+debian-prod ansible_host=192.168.56.11
+centos-prod-2 ansible_host=192.168.137.14

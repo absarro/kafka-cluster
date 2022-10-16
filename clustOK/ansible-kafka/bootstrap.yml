@@ -1,0 +1,9 @@
+---
+- name: install kafka and zooKeeer on server group "both"
+  hosts: both
+  become: true
+  roles:
+     - {role: 'java', tags: 'java'}
+     - {role: 'zookeeper', tags: 'zookeeper'}
+     - {role: 'kafka', tags: 'kafka'}
+

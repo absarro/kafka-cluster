@@ -1,0 +1,26 @@
+[Unit]
+Description=Apache Zookeeper server (Kafka)
+Documentation=http://zookeeper.apache.org
+Description=Apache Zookeeper
+After=network.target
+
+[Service]
+Type=simple
+
+[Install]
+WantedBy=multi-user.target
+
+
+[Service]
+Type=forking
+User={{ role_service_accaunt }}
+ExecStart={{ programm_path }}/bin/zkServer.sh start
+ExecStop={{ programm_path }}/bin/zkServer.sh stop
+ExecReload={{ programm_path }}/bin/zkServer.sh restart
+SyslogIdentifier={{ role_service_accaunt }}
+Restart=always
+RestartSec=0s
+PIDFile={{ data_path }}/zookeeper_server.pid
+
+[Install]
+WantedBy=multi-user.target

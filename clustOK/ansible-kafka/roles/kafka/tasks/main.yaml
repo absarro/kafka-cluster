@@ -1,0 +1,76 @@
+---
+- name: "create sirvice account {{ role_service_accaunt }}"
+  user:
+    name: "{{ role_service_accaunt }}"
+    system: yes
+    create_home: no
+    comment: "sirvice account for  {{ role_name }}"
+  become: yes
+
+- name: "create directory for  {{ role_name }} in {{ programm_path }}"
+  file:
+    path:  "{{ programm_path }}"
+    state: directory
+    owner: "{{ role_service_accaunt }}"
+    group: "{{ role_service_accaunt }}"
+    mode:  0777
+    recurse: yes
+  become: yes  
+
+# download will be canceled if the destination directory is not empty
+- name: checking directory contents
+  find:
+    paths:  "{{ programm_path }}"
+  register: programm_path_content_state
+
+- name: "download {{ role_name }} tar if not downloaded"
+  get_url: url={{ download_url }} dest={{ download_path }}
+  #  when: not zk_package_exists.stat.exists
+  tags:
+    - kafka
+
+- name: "dowload and unpack {{ role_name }}"
+  unarchive:
+    src:  "{{ download_path }}/{{ role_name }}_{{ prog_scale_num }}-{{ prog_release }}.tgz"
+    dest: "{{ programm_path }}"
+    remote_src: yes
+    extra_opts: [--strip-components=1]
+  when: programm_path_content_state.matched < 1
+
+- name: assign correct permissions
+  file:
+    path:  "{{ programm_path }}"
+    owner: "{{ role_service_accaunt }}"
+    group: "{{ role_service_accaunt }}"
+    mode:  0774
+    recurse: yes
+  become: yes
+
+- name: "copy config"
+  template:
+    src:   "server.properties"
+    dest:  "{{ programm_path }}/config"
+    owner: "{{ role_service_accaunt }}"
+    group: "{{ role_service_accaunt }}"
+    mode:  0744
+    force: yes
+  become:  yes
+                                    
+- name: "install {{ role_name }} systemd unit"
+  template:
+    src:   "{{ role_name }}.service"
+    dest:  "/etc/systemd/system/{{ role_name }}.service"
+    owner: "{{ role_service_accaunt }}"
+    group: "{{ role_service_accaunt }}"
+    mode:  0744
+    force: no
+  become:  yes
+
+- name:
+  shell: "systemctl enable {{ role_name }}.service"
+  become:  yes  
+
+- name:
+  shell: "systemctl start {{ role_name }}.service"
+  become:  yes  
+...

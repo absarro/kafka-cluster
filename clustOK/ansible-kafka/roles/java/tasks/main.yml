@@ -1,0 +1,5 @@
+- name: Install Java package (CentOS/RHEL)
+  yum:
+    name: "{{ java.java_yum_package }}"
+    state: present
+    update_cache: yes
